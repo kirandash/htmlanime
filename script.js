@@ -29,6 +29,24 @@
 
 		body.appendChild(canvas);
 
+		//Rendering Elements using HTML5 Canvas Image object
+		var canvasImg = $.createElement('canvas'),
+			cI = canvasImg.getContext("2d"),
+			cimg = new Image();
+
+			cimg.src = "image.jpg";
+
+			cimg.addEventListener("load", function(){
+				canvasImg.width = 200;
+				canvasImg.height = 200;
+
+				cI.fillStyle = "#000";
+				cI.fillRect(0,0,200,200);
+				cI.drawImage(cimg,0,0,canvasImg.width,canvasImg.height);
+
+				body.appendChild(canvasImg);
+			}, false);
+
 	}, false);
 
 }(document));
