@@ -47,6 +47,21 @@
 				body.appendChild(canvasImg);
 			}, false);
 
+		//Rendering Elements using SVG with RAPHAEL
+		var raphaelRect = Raphael(500,0,300,300),
+			rect = raphaelRect.rect(0,0,300,300); //Raphael's rect function
+
+		rect.attr('fill', '#ff0000');
+
+		var raphaelImg = Raphael(800,400,300,300),
+			img = new Image();
+			img.src = "image.jpg";
+
+			raphaelImg.image(img.src, 0,0,300,300),
+			circle = raphaelImg.circle(100,100,100);
+
 	}, false);
+
+
 
 }(document));
