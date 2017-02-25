@@ -18,26 +18,26 @@
 			c = canvas.getContext("2d"),
 			x = 0,
 			y = 0,
-			vx = 2;
+			angle = 0,
+			radius = (canvas.width/2) - 20; //offset width and height
 
-		c.fillStyle = "#ff0";
-		c.fillRect(0,0,canvas.width,canvas.height);
+		canvas.width = 300;
+		canvas.height = 300;
 
 		body.appendChild(canvas);
 
 		update();
 
 		function update() {
-			
+			angle += 0.02;//control speed
+
 			//Draw the rectangle again to avoid repeating nature - or use clearrect
 			c.fillStyle = "#ff0";
 			c.fillRect(0,0,canvas.width,canvas.height);
 
-			//Reverse direction
-			if((x + 20) > canvas.width || x < 0) {
-				vx *= -1;
-			}
-			x += vx;
+			x = ((canvas.width - 20)/2)	+ Math.sin(angle) * radius;
+			y = ((canvas.height - 20)/2)	+ Math.cos(angle) * radius;
+
 			c.fillStyle = '#F00';
 			c.fillRect(x,y,20,20); //position and dimension
 
