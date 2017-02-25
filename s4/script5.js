@@ -21,15 +21,29 @@
 			near = 0.1,
 			far = 10000,
 			camera = new THREE.PerspectiveCamera(angle, aspect, near, far),
-			monkeyLoader = new THREE.SceneLoader();
+			loader = new THREE.JSONLoader(true),
+			mesh = null,
+			duration = 700,
+			keyframes = 15,
+			interpolation = duration / keyframes,
+			lastKeyframe = 0,
+			currentKeyframe = 0,
+			light = new THREE.DirectionalLight(0xffffff, 2);
 			
-		monkeyLoader.load("monkey.js", function(res) {
-			camera = res.currentCamera;
-			scene = res.scene;
+		light.position.set(1, 1, 1).normalize();
+		scene.add(light);
+			
+		loader.load('horse.js', function(g) {
+			mesh = new THREE.Mesh(g, new THREE.MeshLambertMaterial({ color: 0x606060, morphTargets: true }));
+			mesh.scale.set(1, 1, 1);
+			mesh.rotation.y = 90;
+			scene.add(mesh);
 		});
-			
-		scene.add(camera);
 		
+		scene.add(camera);
+
+		camera.position.x = -50;
+		camera.position.y = 100;
 		camera.position.z = 300;
 			
 		renderer.setSize(width, height);
@@ -39,6 +53,24 @@
 		update();
 		
 		function render() {
+			
+			if (mesh) { //If mesh loaded - execute anime routine
+				var time = Date.now() % duration,
+					keyframe = Math.floor(time / interpolation);
+					
+				if (keyframe !== currentKeyframe) {
+					
+					mesh.morphTargetInfluences[lastKeyframe]= 0;
+					mesh.morphTargetInfluences[currentKeyframe] = 1;
+					mesh.morphTargetInfluences[keyframe] = 0;
+					
+					lastKeyframe = currentKeyframe;
+					currentKeyframe = keyframe;
+				}
+				
+				mesh.morphTargetInfluences[keyframe] = (time % interpolation) / interpolation;
+				mesh.morphTargetInfluences[lastKeyframe] = 1- mesh.morphTargetInfluences[keyframe];
+			}
 			
 			renderer.render(scene, camera);
 
