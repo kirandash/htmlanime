@@ -31,13 +31,45 @@
 	
 	var ParticleGenerator = function(container, center, count) {
 		//container, center where particles will show
-		var i = 0,
-			c = container.getContext('2d');
+		var i = 0;
+
+		this.container = container; //particles must be inside container
+
+		this.c = container.getContext('2d');
 		
-		count = count || 0;
+		this.count = count || 0;
 		
-		this.particles = [];
-	}
+		this.particles = []; //Particle array
+
+		this.center = {
+			x: center.x || 0,
+			y: center.y || 0
+		};//Define particle center
+
+		for(; i < count; ++i) {
+			var x = this.center.x,
+				y = this.center.y,
+				vx = 1,
+				vy = 1;
+
+			this.particles.push(new Particle(x,y,vx,vy)); //Push each particle into array				
+		}
+	};
+
+	//Update method for particle generator
+	ParticleGenerator.prototype.update = function(){
+		for(var i =0; i < this.count; ++i){
+			if(this.particles[i].x > 0 &&
+			   this.particles[i].x < this.container.width &&
+			   this.particles[i].y > 0 &&
+			   this.particles[i].y < this.container.height) {//check if particle is inside screen
+
+				this.particles[i].udpate();//update the particle
+
+				c.fillRect(this.particles[i].x, this.particles[i].y, 5, 5);//5px particle
+			}
+		}
+	};
 	
 	$.addEventListener('DOMContentLoaded', function() {
 		
