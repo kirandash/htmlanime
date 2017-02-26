@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>HTML5 Transitions and Animations</title>
+        <style type="text/css">
+            @-webkit-keyframes rotate {
+                from {
+                    -webkit-transform: rotate(-360deg) translate(100px);
+                }
+
+                to {
+                    -webkit-transform: rotate(0deg) translate(100px);
+                }
+            }
+
+            body {
+                background-color: #DDD;
+                margin: 0;
+                padding: 0;
+            }
+
+            div[role="main"] {
+                margin: 0 auto;
+                width: 600px;
+            }
+
+            div[role="main"] div {
+                float: left;
+                width: 200px;
+                height: 200px;
+                position: relative;
+                -webkit-perspective: 700px; /* Add perspective to the wrapper div for more effect */
+            }
+
+            div[role="main"] div p {
+                position: absolute;
+                margin: 0;
+                background-color: #222;
+                z-index: 10;
+                width: 100%;
+                height: 100%;
+                color: white;
+                -webkit-transform: rotateY(180deg); /* Rotate card 180 deg initially */
+                -webkit-backface-visibility: hidden;/* Hide backside of card */
+                transition: all 1s;
+            }
+
+            div[role="main"] div p input[type="button"] {
+                position: absolute;
+                left: 0;
+                top: 0;
+                opacity: 0;
+                transition: all 1s;
+            }
+
+            div[role="main"] div img {
+                position: absolute;
+                top: 0;
+                left: 0;
+                transition: all 1s;
+                -webkit-backface-visibility: hidden; /* Hide backside of image */
+            }
+
+            div[role="main"] div:hover img {
+                -webkit-transform: rotateY(-180deg); /* Rotate image negatively */
+            }
+
+            div[role="main"] div:hover p {
+                -webkit-transform: rotateY(0deg); /* Bring the card back */
+            }
+
+            div[role="main"] div p.show input[type="button"] {
+                opacity: 1;
+                -webkit-transform: scale(1.5);
+                top: 10%;
+                left: 10%;
+                -webkit-animation: rotate 3s infinite linear ;
+            }
+        </style>
+        <script type="text/javascript">
+            (function($) {
+                $.addEventListener('DOMContentLoaded', function() {
+
+                    var ps = $.querySelectorAll('div[role="main"] div p'),
+                        i = 0;
+
+                    for ( ; i < ps.length ; ++i ) {
+                        ps[i].addEventListener('click', handleClick, false);
+                    }
+
+                    function handleClick(e) {
+                        e.target.className = 'show';
+                    }
+
+                }, false);
+            }(document));
+        </script>
+    </head>
+    <body>
+        <div role="main">
+            <div>
+                <img src="http://lorempixel.com/200/200/city/1/">
+                <p>
+                    Paris
+
+                    <input type="button" value="Like">
+                </p>
+            </div>
+            <div>
+                <img src="http://lorempixel.com/200/200/city/2/">
+                <p>
+                    New York
+
+                    <input type="button" value="Like">
+                </p>
+            </div>
+            <div>
+                <img src="http://lorempixel.com/200/200/city/3/">
+                <p>
+                    London
+
+                    <input type="button" value="Like">
+                </p>
+            </div>
+            <div>
+                <img src="http://lorempixel.com/200/200/city/4/">
+                <p>
+                    Rome
+
+                    <input type="button" value="Like">
+                </p>
+            </div>
+            <div>
+                <img src="http://lorempixel.com/200/200/city/5/">
+                <p>
+                    Tokyo
+
+                    <input type="button" value="Like">
+                </p>
+            </div>
+            <div>
+                <img src="http://lorempixel.com/200/200/city/6/">
+                <p>
+                    Sydney
+
+                    <input type="button" value="Like">
+                </p>
+            </div>
+        </div>
+    </body>
+</html>
