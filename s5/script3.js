@@ -1,5 +1,8 @@
 ;(function($) {
 	
+	var smoke = new Image();
+	smoke.src = 'smoke.png';
+	
 	window.requestAnimFrame = (function(){
 	  return  window.requestAnimationFrame       ||
 	          window.webkitRequestAnimationFrame ||
@@ -59,7 +62,7 @@
 				
 				this.particles[i].update();
 				
-				this.c.fillRect(this.particles[i].x, this.particles[i].y, 5, 5);
+				this.c.drawImage(smoke, this.particles[i].x, this.particles[i].y);
 			}
 		}
 	}
@@ -76,7 +79,7 @@
 		
 		body.appendChild(canvas);
 		
-		update();
+		smoke.addEventListener('load', update, false);
 		
 		function update() {
 			
